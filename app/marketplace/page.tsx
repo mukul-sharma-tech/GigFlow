@@ -18,6 +18,7 @@ interface Gig {
   budget: number;
   deadline?: string;
   client: {
+    _id: string;
     name: string;
     companyName: string;
   };

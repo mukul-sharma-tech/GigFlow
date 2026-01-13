@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ interface Proposal {
   deliveryTime: number;
   status: string;
   freelancer: {
+    _id: string;
     name: string;
     email: string;
     rating?: number;
@@ -143,7 +145,12 @@ export default function ProposalsList({ gigId }: ProposalsListProps) {
         <Card key={proposal._id} className="bg-white/5 backdrop-blur-xl border border-white/10">
           <CardHeader className="p-4 sm:p-6">
             <CardTitle className="text-slate-200 dark:text-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
-              <span className="break-words">{proposal.freelancer.name}</span>
+              <Link
+                href={`/profile/${proposal.freelancer._id}`}
+                className="break-words hover:text-blue-400 transition-colors"
+              >
+                {proposal.freelancer.name}
+              </Link>
               <span className="text-base sm:text-lg text-green-200 dark:text-green-400 font-bold whitespace-nowrap">₹{proposal.proposedAmount}</span>
             </CardTitle>
             <p className="text-sm sm:text-base text-slate-200 dark:text-slate-400 break-words">{proposal.freelancer.email}</p>

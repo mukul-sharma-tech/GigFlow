@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { connectDB } from "@/lib/db";
-import User from "@/models/User";
+import User, { IUser } from "@/models/User";
 
 export async function GET(req: NextRequest) {
   try {
@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     await connectDB();
 
     const user = await User.findById(session.user.id).select(
-      "name email companyName role walletBalance hourlyRate rating totalReviews skills about"
+      "name email companyName role walletBalance hourlyRate rating totalReviews skills about companyInfo"
     );
 
     if (!user) {
@@ -38,20 +38,21 @@ export async function PUT(req: NextRequest) {
     await connectDB();
 
     const body = await req.json();
-    const { companyName, skills, about, hourlyRate } = body;
+    const { companyName, skills, about, hourlyRate, companyInfo } = body;
 
-    const updateData: any = {};
+    const updateData: Partial<IUser> = {};
 
     if (companyName !== undefined) updateData.companyName = companyName;
     if (skills !== undefined) updateData.skills = skills;
     if (about !== undefined) updateData.about = about;
     if (hourlyRate !== undefined) updateData.hourlyRate = hourlyRate;
+    if (companyInfo !== undefined) updateData.companyInfo = companyInfo;
 
     const user = await User.findByIdAndUpdate(
       session.user.id,
       updateData,
       { new: true, runValidators: true }
-    ).select("name email companyName role walletBalance hourlyRate rating totalReviews skills about");
+    ).select("name email companyName role walletBalance hourlyRate rating totalReviews skills about companyInfo");
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });

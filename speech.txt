@@ -1,0 +1,37 @@
+Hello everyone! Today, I'm excited to walk you through GigFlow, a comprehensive gig economy platform I've built that connects freelancers with clients in a seamless and secure way.
+
+GigFlow is designed to revolutionize how freelancers and clients collaborate on projects. Whether you're a developer looking for work or a business owner needing specialized skills, GigFlow provides all the tools you need for successful project completion.
+
+Let me start by showing you the key features that make GigFlow stand out. First, we have robust user authentication with email verification and secure password reset functionality. Users can sign up as either clients or freelancers, each with tailored interfaces and capabilities.
+
+For clients, the platform offers an intuitive gig posting system. You can create detailed gig listings with requirements, budgets, and timelines. The marketplace allows easy browsing and searching of available opportunities.
+
+Freelancers can submit comprehensive proposals, showcasing their skills and experience. Once a proposal is accepted, the system automatically generates contracts with clear terms and conditions.
+
+One of the standout features is our real-time chat system, powered by Socket.io. This allows instant communication between clients and freelancers throughout the project lifecycle, with typing indicators and message notifications.
+
+We also have an escrow system for secure payments, ensuring both parties are protected. Users can track their wallet balances and transaction history.
+
+The dashboard provides a personalized overview of gigs, contracts, and earnings. It's designed to give you all the important information at a glance.
+
+Now, let's talk about the technology behind GigFlow. We're using Next.js 16 with React 19 and TypeScript for a modern, type-safe frontend. The backend leverages Next.js API routes with MongoDB and Mongoose for data persistence.
+
+Authentication is handled by NextAuth.js with JWT sessions, and we use Socket.io for real-time features. The UI is built with Tailwind CSS and Radix UI components, making it both beautiful and accessible.
+
+For emails, we use Nodemailer to send verification and password reset emails.
+
+Setting up GigFlow is straightforward. First, you'll need Node.js, MongoDB, and an email service. Clone the repository, install dependencies with npm install, and set up your environment variables in a .env.local file.
+
+You'll need to configure your MongoDB connection, NextAuth secrets, and email settings. Once that's done, run npm run dev and you're ready to go!
+
+Let me quickly demonstrate the user flow. Starting from the homepage, users can sign up or log in. After email verification, they complete their profiles - clients add company information, freelancers add skills and portfolios.
+
+Clients can then post gigs through the intuitive form, specifying all requirements. Freelancers browse the marketplace, view gig details, and submit proposals.
+
+When a client approves a proposal, a contract is created, and the chat system becomes available for communication.
+
+Throughout the process, users can track everything from their personalized dashboards.
+
+GigFlow represents the future of freelance work - secure, efficient, and user-friendly. Whether you're a freelancer building your career or a client finding the perfect talent, GigFlow has you covered.
+
+Thank you for watching this walkthrough. I hope you've enjoyed learning about GigFlow!

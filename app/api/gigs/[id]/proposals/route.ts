@@ -36,7 +36,7 @@ export async function GET(
     }
 
     const proposals = await Proposal.find({ gig: gig._id })
-      .populate("freelancer", "name email rating totalReviews")
+      .populate("freelancer", "_id name email rating totalReviews")
       .sort({ proposedAmount: -1 }); // Sort by amount descending
 
     return NextResponse.json({ proposals });

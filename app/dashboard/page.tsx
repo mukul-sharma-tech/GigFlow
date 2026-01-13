@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import FreelancerProfileForm from "@/components/profile/FreelancerProfileForm";
 import ClientProfileForm from "@/components/profile/ClientProfileForm";
 import Sidebar from "@/components/Sidebar";
-import { Search } from "lucide-react";
+import { Search, Building, Globe, MapPin } from "lucide-react";
 import { toast } from "sonner";
 
 interface UserProfile {
@@ -26,6 +26,12 @@ interface UserProfile {
     summary?: string;
     experience?: string;
     projects?: { name: string; description: string; link?: string }[];
+  };
+  companyInfo?: {
+    description?: string;
+    industry?: string;
+    website?: string;
+    location?: string;
   };
 }
 
@@ -139,6 +145,7 @@ export default function DashboardPage() {
               <ClientProfileForm
                 initialData={{
                   companyName: userProfile.companyName || "",
+                  companyInfo: userProfile.companyInfo || {},
                 }}
                 onSave={handleSaveProfile}
               />
@@ -244,9 +251,61 @@ export default function DashboardPage() {
                 })()}
               </div>
             ) : (
-              <div>
-                <h3 className="text-lg font-medium text-white mb-2">Company Name</h3>
-                <p className="text-gray-300">{userProfile.companyName || "No company name"}</p>
+              <div className="space-y-6">
+                {/* Company Name */}
+                <div>
+                  <h3 className="text-lg font-medium text-white mb-2">Company Name</h3>
+                  <p className="text-gray-300">{userProfile.companyName || "No company name set"}</p>
+                </div>
+
+                {/* Company Information */}
+                {userProfile.companyInfo && (
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium text-white">Company Information</h3>
+
+                    {userProfile.companyInfo.description && (
+                      <div>
+                        <h4 className="font-semibold mb-2 text-white">Description</h4>
+                        <p className="text-gray-300">{userProfile.companyInfo.description}</p>
+                      </div>
+                    )}
+
+                    {userProfile.companyInfo.industry && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">Industry:</span>
+                        <span className="text-white">{userProfile.companyInfo.industry}</span>
+                      </div>
+                    )}
+
+                    {userProfile.companyInfo.website && (
+                      <div className="flex items-center gap-2">
+                        <Globe className="w-4 h-4 text-gray-400" />
+                        <a
+                          href={userProfile.companyInfo.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-400 hover:underline"
+                        >
+                          {userProfile.companyInfo.website}
+                        </a>
+                      </div>
+                    )}
+
+                    {userProfile.companyInfo.location && (
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-gray-400" />
+                        <span className="text-white">{userProfile.companyInfo.location}</span>
+                      </div>
+                    )}
+
+                    {!userProfile.companyInfo.description &&
+                     !userProfile.companyInfo.industry &&
+                     !userProfile.companyInfo.website &&
+                     !userProfile.companyInfo.location && (
+                      <p className="text-gray-400">No additional company information provided</p>
+                    )}
+                  </div>
+                )}
               </div>
             )}
           </div>

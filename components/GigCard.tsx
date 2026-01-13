@@ -146,6 +146,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -156,6 +157,7 @@ interface Gig {
   budget: number;
   deadline?: string;
   client: {
+    _id: string;
     name: string;
     companyName: string;
   };
@@ -181,7 +183,12 @@ export default function GigCard({ gig }: GigCardProps) {
 
           {/* Client */}
           <p className="text-xs sm:text-sm text-gray-400 truncate">
-            {gig.client.name}
+            <Link
+              href={`/profile/${gig.client._id}`}
+              className="hover:text-blue-400 transition-colors"
+            >
+              {gig.client.name}
+            </Link>
             {gig.client.companyName && ` • ${gig.client.companyName}`}
           </p>
 

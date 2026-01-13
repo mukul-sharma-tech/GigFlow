@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     await connectDB();
 
     const gigs = await Gig.find({ status: "open" })
-      .populate("client", "name companyName")
+      .populate("client", "_id name companyName")
       .sort({ createdAt: -1 });
 
     return NextResponse.json({ gigs });

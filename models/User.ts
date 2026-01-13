@@ -8,6 +8,13 @@ export interface IProject {
   link?: string;
 }
 
+export interface ICompanyInfo {
+  description?: string;      // company description
+  industry?: string;         // industry type
+  website?: string;          // company website
+  location?: string;         // company location
+}
+
 export interface IAbout {
   summary?: string;          // short intro / bio
   experience?: string;       // detailed experience (text)
@@ -35,6 +42,7 @@ export interface IUser extends mongoose.Document {
   // Profile
   skills?: string[];
   about?: IAbout;
+  companyInfo?: ICompanyInfo; // for clients
 
   // Auth
   resetPasswordToken?: string;
@@ -51,6 +59,28 @@ const ProjectSchema = new Schema<IProject>(
     name: { type: String, required: true },
     description: { type: String, required: true },
     link: { type: String },
+  },
+  { _id: false }
+);
+
+const CompanyInfoSchema = new Schema<ICompanyInfo>(
+  {
+    description: {
+      type: String,
+      maxlength: 1000,
+    },
+    industry: {
+      type: String,
+      maxlength: 100,
+    },
+    website: {
+      type: String,
+      maxlength: 200,
+    },
+    location: {
+      type: String,
+      maxlength: 200,
+    },
   },
   { _id: false }
 );
@@ -122,6 +152,11 @@ const UserSchema = new Schema<IUser>(
 
     about: {
       type: AboutSchema,
+      default: {},
+    },
+
+    companyInfo: {
+      type: CompanyInfoSchema,
       default: {},
     },
 
