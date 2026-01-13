@@ -88,7 +88,7 @@ export default function LayoutContent({ children }: LayoutContentProps) {
         <main
           className={`flex-1 ${
             isAuthPage ? "" : "lg:ml-64"
-          } overflow-y-auto p-4 lg:p-6`}
+          } overflow-y-auto p-3 sm:p-4 lg:p-6`}
         >
           {children}
         </main>

@@ -107,7 +107,7 @@ export default function FreelancerProfileForm({ initialData, onSave }: Freelance
 
         {/* Hourly Rate */}
         <div>
-          <Label htmlFor="hourlyRate">Hourly Rate ($)</Label>
+          <Label htmlFor="hourlyRate">Hourly Rate (₹)</Label>
           <Input
             id="hourlyRate"
             type="number"

@@ -151,14 +151,14 @@ export default function ProposalForm({ gigId }: ProposalFormProps) {
         </div>
 
         {/* Amount + Delivery */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           
           <div className="flex flex-col gap-2">
             <Label
               htmlFor="proposedAmount"
               className="text-slate-200 dark:text-slate-100"
             >
-              Proposed Amount ($)
+              Proposed Amount (₹)
             </Label>
 
             <Input

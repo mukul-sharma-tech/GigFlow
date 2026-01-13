@@ -3,7 +3,6 @@
 import { useSession, signOut } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import {
   Home,
   FileText,
@@ -12,7 +11,8 @@ import {
   User,
   LogOut,
   Menu,
-  X
+  X,
+  MessageSquare
 } from "lucide-react";
 import { useState } from "react";
 
@@ -29,6 +29,7 @@ export default function Sidebar({ className }: SidebarProps) {
   const navigation = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
     { name: "My Contracts", href: "/contracts", icon: FileText },
+    { name: "Chats", href: "/chats", icon: MessageSquare },
     { name: "Completed Orders", href: "/completed-orders", icon: CheckCircle },
     { name: "Marketplace", href: "/marketplace", icon: ShoppingCart },
   ];
@@ -41,14 +42,14 @@ export default function Sidebar({ className }: SidebarProps) {
   return (
     <>
       {/* Mobile menu button */}
-      <div className="lg:hidden fixed top-4 left-4 z-50">
+      <div className="lg:hidden fixed top-3 left-3 z-50">
         <Button
           onClick={() => setIsOpen(!isOpen)}
           variant="ghost"
           size="icon"
-          className="bg-black/20 backdrop-blur-xl border border-white/10 text-white hover:bg-white/10"
+          className="bg-black/20 backdrop-blur-xl border border-white/10 text-white hover:bg-white/10 h-10 w-10"
         >
-          {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </Button>
       </div>
 
@@ -73,9 +74,9 @@ export default function Sidebar({ className }: SidebarProps) {
         <div className="flex flex-col h-full p-6 overflow-y-auto">
 
           {/* Logo/Brand */}
-          <div className="mb-8">
-            <h1 className="text-2xl font-bold text-white">GigFlow</h1>
-            <p className="text-sm text-gray-400 mt-1">
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-xl sm:text-2xl font-bold text-white">GigFlow</h1>
+            <p className="text-xs sm:text-sm text-gray-400 mt-1 truncate">
               Welcome, {session?.user?.name}
             </p>
           </div>
@@ -92,7 +93,7 @@ export default function Sidebar({ className }: SidebarProps) {
                   onClick={() => handleNavigation(item.href)}
                   variant="ghost"
                   className={`
-                    w-full justify-start text-left h-12 px-4
+                    w-full justify-start text-left h-11 sm:h-12 px-3 sm:px-4 text-sm sm:text-base
                     ${isActive
                       ? 'bg-white/20 text-white border border-white/20'
                       : 'text-gray-300 hover:text-white hover:bg-white/10'
@@ -109,21 +110,21 @@ export default function Sidebar({ className }: SidebarProps) {
 
           {/* User actions */}
           <div className="space-y-2">
-            <Button
+            {/* <Button
               onClick={() => router.push("/dashboard")}
               variant="ghost"
-              className="w-full justify-start text-left h-12 px-4 text-gray-300 hover:text-white hover:bg-white/10"
+              className="w-full justify-start text-left h-11 sm:h-12 px-3 sm:px-4 text-sm sm:text-base text-gray-300 hover:text-white hover:bg-white/10"
             >
-              <User className="mr-3 h-5 w-5" />
+              <User className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5" />
               Profile Settings
             </Button>
-
+ */}
             <Button
               onClick={() => signOut({ callbackUrl: "/" })}
               variant="ghost"
-              className="w-full justify-start text-left h-12 px-4 text-red-400 hover:text-red-300 hover:bg-red-500/10"
+              className="w-full justify-start text-left h-11 sm:h-12 px-3 sm:px-4 text-sm sm:text-base text-red-400 hover:text-red-300 hover:bg-red-500/10"
             >
-              <LogOut className="mr-3 h-5 w-5" />
+              <LogOut className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5" />
               Logout
             </Button>
           </div>

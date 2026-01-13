@@ -5,9 +5,11 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import FreelancerProfileForm from "@/components/profile/FreelancerProfileForm";
 import ClientProfileForm from "@/components/profile/ClientProfileForm";
 import Sidebar from "@/components/Sidebar";
+import { Search } from "lucide-react";
 import { toast } from "sonner";
 
 interface UserProfile {
@@ -34,6 +36,7 @@ export default function DashboardPage() {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
@@ -97,32 +100,32 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto space-y-4 mt-10 sm:space-y-6 lg:space-y-8 px-2 sm:px-0">
       {/* Welcome Section */}
       <div className="text-center lg:text-left">
-        <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2 tracking-tight">
           Welcome back, {session?.user?.name}
         </h1>
-        <p className="text-lg text-gray-300">
+        <p className="text-base sm:text-lg text-gray-300">
           {userProfile.companyName || "Manage your freelance projects"}
         </p>
-        <p className="text-sm text-gray-400 mt-1">Role: {userProfile.role}</p>
+        <p className="text-xs sm:text-sm text-gray-400 mt-1">Role: {userProfile.role}</p>
       </div>
 
       {/* Profile Section */}
-      <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-white">Profile Settings</h2>
+      <div className="bg-white/5 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-white/10 p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mb-4">
+          <h2 className="text-lg sm:text-xl font-semibold text-white">Profile Settings</h2>
           <Button
             onClick={() => setEditing(!editing)}
-            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0"
+            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0 w-full sm:w-auto text-sm sm:text-base"
           >
             {editing ? "Cancel" : "Edit Profile"}
           </Button>
         </div>
 
         {editing ? (
-          <div className="bg-black/20 backdrop-blur-xl rounded-xl border border-white/5 p-6">
+          <div className="bg-black/20 backdrop-blur-xl rounded-xl border border-white/5 p-4 sm:p-6">
             {userProfile.role === "freelancer" ? (
               <FreelancerProfileForm
                 initialData={{
@@ -142,48 +145,103 @@ export default function DashboardPage() {
             )}
           </div>
         ) : (
-          <div className="bg-black/20 backdrop-blur-xl rounded-xl border border-white/5 p-6">
+          <div className="bg-black/20 backdrop-blur-xl rounded-xl border border-white/5 p-4 sm:p-6">
+            {/* Search Bar for Profile Content */}
+            {userProfile.role === "freelancer" && (
+              <div className="mb-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Input
+                    type="text"
+                    placeholder="Search profile content..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10 bg-black/20 border-white/10 text-white placeholder:text-gray-400"
+                  />
+                </div>
+              </div>
+            )}
             {userProfile.role === "freelancer" ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="text-lg font-medium text-white mb-2">Skills</h3>
-                  <p className="text-gray-300">{userProfile.skills?.join(", ") || "No skills added"}</p>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium text-white mb-2">Hourly Rate</h3>
-                  <p className="text-green-400 font-semibold">${userProfile.hourlyRate || 0}/hr</p>
-                </div>
-                <div className="md:col-span-2">
-                  <h3 className="text-lg font-medium text-white mb-2">Summary</h3>
-                  <p className="text-gray-300">{userProfile.about?.summary || "No summary"}</p>
-                </div>
-                <div className="md:col-span-2">
-                  <h3 className="text-lg font-medium text-white mb-2">Experience</h3>
-                  <p className="text-gray-300">{userProfile.about?.experience || "No experience"}</p>
-                </div>
-                <div className="md:col-span-2">
-                  <h3 className="text-lg font-medium text-white mb-2">Projects</h3>
-                  {userProfile.about?.projects?.length ? (
-                    <div className="space-y-3">
-                      {userProfile.about.projects.map((proj, idx) => (
-                        <div key={idx} className="bg-white/5 rounded-lg p-4 border border-white/10">
-                          <p className="text-white font-medium">{proj.name}</p>
-                          <p className="text-gray-300 text-sm">{proj.description}</p>
-                          {proj.link && (
-                            <a
-                              href={proj.link}
-                              className="text-blue-400 hover:text-blue-300 text-sm underline mt-1 inline-block"
-                            >
-                              View Project
-                            </a>
-                          )}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                {(() => {
+                  const query = searchQuery.toLowerCase();
+                  const shouldShow = (content: string) => 
+                    !searchQuery.trim() || content.toLowerCase().includes(query);
+
+                  const skillsText = userProfile.skills?.join(", ") || "No skills added";
+                  const summaryText = userProfile.about?.summary || "No summary";
+                  const experienceText = userProfile.about?.experience || "No experience";
+                  
+                  const filteredProjects = userProfile.about?.projects?.filter((proj) =>
+                    !searchQuery.trim() ||
+                    proj.name.toLowerCase().includes(query) ||
+                    proj.description.toLowerCase().includes(query)
+                  ) || [];
+
+                  return (
+                    <>
+                      {shouldShow(skillsText) && (
+                        <div>
+                          <h3 className="text-base sm:text-lg font-medium text-white mb-2">Skills</h3>
+                          <p className="text-sm sm:text-base text-gray-300 break-words">{skillsText}</p>
                         </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-gray-400">No projects</p>
-                  )}
-                </div>
+                      )}
+                      {shouldShow(`₹${userProfile.hourlyRate || 0}/hr`) && (
+                        <div>
+                          <h3 className="text-base sm:text-lg font-medium text-white mb-2">Hourly Rate</h3>
+                          <p className="text-sm sm:text-base text-green-400 font-semibold">₹{userProfile.hourlyRate || 0}/hr</p>
+                        </div>
+                      )}
+                      {shouldShow(summaryText) && (
+                        <div className="md:col-span-2">
+                          <h3 className="text-lg font-medium text-white mb-2">Summary</h3>
+                          <p className="text-gray-300">{summaryText}</p>
+                        </div>
+                      )}
+                      {shouldShow(experienceText) && (
+                        <div className="md:col-span-2">
+                          <h3 className="text-lg font-medium text-white mb-2">Experience</h3>
+                          <p className="text-gray-300">{experienceText}</p>
+                        </div>
+                      )}
+                      <div className="md:col-span-2">
+                        <h3 className="text-lg font-medium text-white mb-2">Projects</h3>
+                        {filteredProjects.length > 0 ? (
+                          <div className="space-y-3">
+                            {filteredProjects.map((proj, idx) => (
+                              <div key={idx} className="bg-white/5 rounded-lg p-4 border border-white/10">
+                                <p className="text-white font-medium">{proj.name}</p>
+                                <p className="text-gray-300 text-sm">{proj.description}</p>
+                                {proj.link && (
+                                  <a
+                                    href={proj.link}
+                                    className="text-blue-400 hover:text-blue-300 text-sm underline mt-1 inline-block"
+                                  >
+                                    View Project
+                                  </a>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        ) : userProfile.about?.projects?.length === 0 ? (
+                          <p className="text-gray-400">No projects</p>
+                        ) : searchQuery.trim() ? (
+                          <p className="text-gray-400">No projects match your search.</p>
+                        ) : null}
+                      </div>
+                      {searchQuery.trim() && 
+                       !shouldShow(skillsText) && 
+                       !shouldShow(`₹${userProfile.hourlyRate || 0}/hr`) && 
+                       !shouldShow(summaryText) && 
+                       !shouldShow(experienceText) && 
+                       filteredProjects.length === 0 && (
+                        <div className="md:col-span-2 text-center py-4">
+                          <p className="text-gray-400">No profile content matches your search.</p>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
               </div>
             ) : (
               <div>

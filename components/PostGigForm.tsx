@@ -85,7 +85,7 @@ export default function PostGigForm({ onSubmit }: PostGigFormProps) {
 
       <div>
         <Label htmlFor="budget" className="text-slate-900 dark:text-slate-100">
-          Budget ($)
+          Budget (₹)
         </Label>
         <Input
           id="budget"

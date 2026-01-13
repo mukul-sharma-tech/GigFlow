@@ -109,33 +109,87 @@ export default function GigPage({ params }: { params: Promise<{ id: string }> })
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
-        <Button
-          onClick={() => router.push("/marketplace")}
-          className="mb-6"
-          variant="outline"
-        >
-          Back to Marketplace
-        </Button>
-
-        <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
-          <CardHeader>
-            <CardTitle className="text-slate-200 dark:text-slate-100">{gig.title}</CardTitle>
-            <p className="text-slate-200 dark:text-slate-400">By {gig.client.name} ({gig.client.companyName})</p>
+    <div className="max-w-6xl mt-10 mx-auto space-y-4 sm:space-y-6 lg:space-y-8 px-2 sm:px-0">
+        {/* <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="text-lg sm:text-xl text-slate-200 dark:text-slate-100 break-words">{gig.title}</CardTitle>
+            <p className="text-sm sm:text-base text-slate-200 dark:text-slate-400 break-words">By {gig.client.name} ({gig.client.companyName})</p>
           </CardHeader>
-          <CardContent>
-            <p className="text-slate-200 dark:text-slate-300 mb-4">{gig.description}</p>
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-green-400 dark:text-green-400 font-semibold">${gig.budget}</span>
+          <CardContent className="p-4 sm:p-6 pt-0">
+            <p className="text-sm sm:text-base text-slate-200 dark:text-slate-300 mb-4 break-words">{gig.description}</p>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 mb-4">
+              <span className="text-base sm:text-lg text-green-400 dark:text-green-400 font-semibold">₹{gig.budget}</span>
               {gig.deadline && (
-                <span className="text-slate-200 dark:text-slate-400">
+                <span className="text-xs sm:text-sm text-slate-200 dark:text-slate-400">
                   Deadline: {new Date(gig.deadline).toLocaleDateString()}
                 </span>
               )}
-              <span className="text-slate-200 dark:text-slate-400">Status: {gig.status}</span>
+              <span className="text-xs sm:text-sm text-slate-200 dark:text-slate-400">Status: {gig.status}</span>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
+{/* 
+<Card className="bg-white/5 backdrop-blur-xl border border-white/10">
+  <CardHeader className="p-2 sm:p-3">
+    <CardTitle className="text-base sm:text-lg text-slate-200 dark:text-slate-100 truncate">
+      {gig.title}
+    </CardTitle>
+    <p className="text-xs sm:text-sm text-slate-200 dark:text-slate-400 truncate">
+      By {gig.client.name} {gig.client.companyName && `(${gig.client.companyName})`}
+    </p>
+  </CardHeader>
+
+  <CardContent className="p-2 sm:p-3 pt-1">
+    <p className="text-sm text-slate-200 dark:text-slate-300 truncate mb-2">
+      {gig.description}
+    </p>
+
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 text-xs sm:text-sm">
+      <span className="text-green-400 dark:text-green-400 font-semibold">
+        ₹{gig.budget}
+      </span>
+      {gig.deadline && (
+        <span className="text-slate-200 dark:text-slate-400">
+          Deadline: {new Date(gig.deadline).toLocaleDateString()}
+        </span>
+      )}
+      <span className="text-slate-200 dark:text-slate-400">Status: {gig.status}</span>
+    </div>
+  </CardContent>
+</Card> */}
+
+<Card className="bg-white/5 backdrop-blur-xl border border-white/10">
+  <CardHeader className="p-2 sm:p-3 pb-0 space-y-0">
+    <CardTitle className="text-base sm:text-lg text-slate-200 dark:text-slate-100 truncate leading-tight">
+      {gig.title}
+    </CardTitle>
+
+    <p className="text-xs sm:text-sm text-slate-200 dark:text-slate-400 truncate m-0 leading-tight">
+      By {gig.client.name}{" "}
+      {gig.client.companyName && `(${gig.client.companyName})`}
+    </p>
+  </CardHeader>
+
+  <CardContent className="p-2 sm:p-3 pt-0">
+    <p className="text-sm text-slate-200 dark:text-slate-300 truncate mb-2 mt-[-2px] leading-tight">
+      {gig.description}
+    </p>
+
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 text-xs sm:text-sm">
+      <span className="text-green-400 font-semibold">₹{gig.budget}</span>
+
+      {gig.deadline && (
+        <span className="text-slate-200 dark:text-slate-400">
+          Deadline: {new Date(gig.deadline).toLocaleDateString()}
+        </span>
+      )}
+
+      <span className="text-slate-200 dark:text-slate-400">
+        Status: {gig.status}
+      </span>
+    </div>
+  </CardContent>
+</Card>
 
         {contract ? (
           <ContractDetails contract={contract} isClient={isClient} />
@@ -201,52 +255,54 @@ function ContractDetails({ contract, isClient }: { contract: Contract; isClient:
 
   return (
     <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
-      <CardHeader>
-        <CardTitle className="text-slate-200 dark:text-slate-100">Contract Details</CardTitle>
+      <CardHeader className="p-4 sm:p-6">
+        <CardTitle className="text-base sm:text-lg text-slate-200 dark:text-slate-100">Contract Details</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
+      <CardContent className="p-4 sm:p-6 pt-0">
+        <div className="space-y-3 sm:space-y-4">
           <div>
-            <h3 className="text-lg font-medium text-slate-200 dark:text-slate-100">Freelancer</h3>
-            <p className="text-slate-600 dark:text-slate-400">{contract.freelancer.name} ({contract.freelancer.email})</p>
+            <h3 className="text-base sm:text-lg font-medium text-slate-200 dark:text-slate-100">Freelancer</h3>
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 break-words">{contract.freelancer.name} ({contract.freelancer.email})</p>
           </div>
           <div>
-            <h3 className="text-lg font-medium text-slate-200 dark:text-slate-100">Agreed Amount</h3>
-            <p className="text-green-600 dark:text-green-400 font-bold">${contract.agreedAmount}</p>
+            <h3 className="text-base sm:text-lg font-medium text-slate-200 dark:text-slate-100">Agreed Amount</h3>
+            <p className="text-base sm:text-lg text-green-600 dark:text-green-400 font-bold">₹{contract.agreedAmount}</p>
           </div>
           <div>
-            <h3 className="text-lg font-medium text-slate-200 dark:text-slate-100">Status</h3>
-            <p className="text-slate-600 dark:text-slate-400">{contract.status}</p>
+            <h3 className="text-base sm:text-lg font-medium text-slate-200 dark:text-slate-100">Status</h3>
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">{contract.status}</p>
           </div>
           {contract.submission && (
             <div>
-              <h3 className="text-lg font-medium text-slate-200 dark:text-slate-100">Submission</h3>
-              <p className="text-slate-200 dark:text-slate-400">{contract.submission.message}</p>
+              <h3 className="text-base sm:text-lg font-medium text-slate-200 dark:text-slate-100">Submission</h3>
+              <p className="text-sm sm:text-base text-slate-200 dark:text-slate-400 break-words">{contract.submission.message}</p>
               {contract.submission.fileUrl && (
-                <a href={contract.submission.fileUrl} className="text-blue-200 dark:text-blue-400">View File</a>
+                <a href={contract.submission.fileUrl} className="text-sm sm:text-base text-blue-200 dark:text-blue-400 break-all">View File</a>
               )}
-              <p className="text-slate-200 dark:text-slate-400">Submitted at: {contract.submission.submittedAt ? new Date(contract.submission.submittedAt).toLocaleString() : "N/A"}</p>
+              <p className="text-xs sm:text-sm text-slate-200 dark:text-slate-400">Submitted at: {contract.submission.submittedAt ? new Date(contract.submission.submittedAt).toLocaleString() : "N/A"}</p>
             </div>
           )}
           {contract.status === "active" && !isClient && (
-            <div className="space-y-2">
+            <div className="space-y-2 sm:space-y-3">
               <Textarea
                 placeholder="Submission message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
+                className="text-sm sm:text-base min-h-[80px] sm:min-h-[100px]"
               />
               <Input
                 placeholder="File URL"
                 value={fileUrl}
                 onChange={(e) => setFileUrl(e.target.value)}
+                className="text-sm sm:text-base"
               />
-              <Button onClick={handleSubmitWork} disabled={submitting}>
+              <Button onClick={handleSubmitWork} disabled={submitting} className="w-full sm:w-auto text-sm sm:text-base">
                 {submitting ? "Submitting..." : "Submit Work"}
               </Button>
             </div>
           )}
           {contract.status === "work_submitted" && isClient && (
-            <div className="space-y-2">
+            <div className="space-y-2 sm:space-y-3">
               <label className="block text-sm font-medium text-slate-900 dark:text-slate-100">
                 Rate the Freelancer:
               </label>
@@ -255,7 +311,7 @@ function ContractDetails({ contract, isClient }: { contract: Contract; isClient:
                   <button
                     key={star}
                     type="button"
-                    className={`text-2xl ${
+                    className={`text-xl sm:text-2xl ${
                       star <= (hoverRating || rating)
                         ? "text-yellow-400"
                         : "text-gray-300"
@@ -271,7 +327,7 @@ function ContractDetails({ contract, isClient }: { contract: Contract; isClient:
               <p className="text-sm text-slate-600 dark:text-slate-400">
                 {rating} star{rating !== 1 ? "s" : ""}
               </p>
-              <Button onClick={handleApproveWork} disabled={submitting}>
+              <Button onClick={handleApproveWork} disabled={submitting} className="w-full sm:w-auto text-sm sm:text-base">
                 {submitting ? "Approving..." : "Approve Work"}
               </Button>
             </div>
