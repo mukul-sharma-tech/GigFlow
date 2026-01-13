@@ -1,65 +1,144 @@
+"use client";
+
+import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+export default function HomePage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  if (status === "loading") {
+    return (
+      <main className="min-h-screen flex items-center justify-center
+        bg-slate-100 dark:bg-[#0b1220]">
+        <p className="text-slate-500 dark:text-slate-400">Loading...</p>
       </main>
-    </div>
+    );
+  }
+
+  return (
+    <main className="
+      relative min-h-screen overflow-hidden
+      flex flex-col items-center justify-center px-6
+      bg-slate-100 dark:bg-[#0b1220]
+    ">
+
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-br
+        from-slate-200 via-white to-blue-100
+        dark:from-slate-900 dark:via-[#0b1220] dark:to-blue-900/40
+      " />
+
+      {/* Glow orbs */}
+      <div className="absolute -top-56 -left-56 w-[650px] h-[650px] rounded-full blur-[120px]
+        bg-blue-300/40 dark:bg-blue-700/20" />
+      <div className="absolute top-1/4 -right-64 w-[700px] h-[700px] rounded-full blur-[140px]
+        bg-indigo-300/35 dark:bg-indigo-800/25" />
+      <div className="absolute bottom-[-200px] left-1/4 w-[520px] h-[520px] rounded-full blur-[110px]
+        bg-cyan-300/30 dark:bg-cyan-700/20" />
+
+      {/* Content */}
+      <div className="relative z-10 max-w-4xl text-center animate-fade-up">
+
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight
+          text-slate-900 dark:text-slate-100">
+          Welcome to Workohub
+        </h1>
+
+        <p className="mt-6 text-lg max-w-xl mx-auto
+          text-slate-600 dark:text-slate-400">
+          Freelancers sell your services, find clients, and get paid all in one place.
+        </p>
+
+        {/* LOGO */}
+        <div className="relative mt-14 mb-8 flex justify-center">
+          {/* glow behind logo */}
+          <div className="absolute inset-0 flex justify-center">
+            <div className="w-32 h-32 bg-blue-400/30 dark:bg-blue-600/20
+              rounded-full blur-[60px]" />
+          </div>
+
+          <Image
+            src="/logo.png"
+            alt="SynopseeAI Logo"
+            width={359}
+            height={204}
+            className="relative z-10 opacity-90"
+            priority
+          />
+        </div>
+
+        {/* Buttons */}
+        <div className="mt-6 flex flex-col sm:flex-row justify-center gap-5">
+          {session ? (
+            <>
+              <Button
+                onClick={() => router.push("/dashboard")}
+                className="
+                  h-12 px-10
+                  bg-slate-800 text-white
+                  dark:bg-slate-700/60 dark:text-slate-100
+                  border border-black/10 dark:border-white/10
+                  hover:bg-slate-700 dark:hover:bg-slate-700
+                  transition-all duration-200
+                  hover:-translate-y-[1px]
+                  hover:shadow-[0_12px_35px_rgba(59,130,246,0.35)]
+                "
+              >
+                Go to Dashboard
+              </Button>
+
+              <Button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="
+                  h-12 px-10
+                  bg-transparent
+                  text-slate-700 dark:text-slate-300
+                  border border-black/10 dark:border-white/10
+                  hover:bg-black/5 dark:hover:bg-white/5
+                  transition-all duration-200
+                "
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                onClick={() => router.push("/login")}
+                className="
+                  h-12 px-10
+                  bg-slate-800 text-white
+                  dark:bg-slate-700/60 dark:text-slate-100
+                  border border-black/10 dark:border-white/10
+                  hover:bg-slate-700 dark:hover:bg-slate-700
+                  transition-all duration-200
+                  hover:-translate-y-[1px]
+                  hover:shadow-[0_12px_35px_rgba(59,130,246,0.35)]
+                "
+              >
+                Login
+              </Button>
+
+              <Button
+                onClick={() => router.push("/signup")}
+                className="
+                  h-12 px-10
+                  bg-transparent
+                  text-slate-700 dark:text-slate-300
+                  border border-black/10 dark:border-white/10
+                  hover:bg-black/5 dark:hover:bg-white/5
+                  transition-all duration-200
+                "
+              >
+                Create Account
+              </Button>
+            </>
+          )}
+        </div>
+      </div>
+    </main>
   );
 }
