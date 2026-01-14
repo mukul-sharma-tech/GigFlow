@@ -44,7 +44,7 @@ export default function HomePage() {
 
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tight
           text-slate-900 dark:text-slate-100">
-          Welcome to Workohub
+          Welcome to GigFlow
         </h1>
 
         <p className="mt-6 text-lg max-w-xl mx-auto
@@ -62,7 +62,7 @@ export default function HomePage() {
 
           <Image
             src="/logo.png"
-            alt="SynopseeAI Logo"
+            alt="GigFlow Logo"
             width={359}
             height={204}
             className="relative z-10 opacity-90"
