@@ -53,14 +53,7 @@ export default function Sidebar({ className }: SidebarProps) {
         </Button>
       </div>
 
-      {/* Sidebar */}
-      {/* <div className={`
-        fixed inset-y-0 left-0 z-40 w-64 bg-black/20 backdrop-blur-xl border-r border-white/10
-        transform transition-transform duration-300 ease-in-out
-        lg:translate-x-0 lg:static lg:inset-0
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-        ${className}
-      `}> */}
+
       <div className={`
   fixed top-0 left-0 h-screen w-64 z-40
   bg-black/20 backdrop-blur-xl border-r border-white/10
@@ -110,15 +103,6 @@ export default function Sidebar({ className }: SidebarProps) {
 
           {/* User actions */}
           <div className="space-y-2">
-            {/* <Button
-              onClick={() => router.push("/dashboard")}
-              variant="ghost"
-              className="w-full justify-start text-left h-11 sm:h-12 px-3 sm:px-4 text-sm sm:text-base text-gray-300 hover:text-white hover:bg-white/10"
-            >
-              <User className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5" />
-              Profile Settings
-            </Button>
- */}
             <Button
               onClick={() => signOut({ callbackUrl: "/" })}
               variant="ghost"

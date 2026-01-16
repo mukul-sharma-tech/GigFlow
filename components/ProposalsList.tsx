@@ -79,7 +79,7 @@ export default function ProposalsList({ gigId }: ProposalsListProps) {
   };
 
   if (loading) {
-    return <p className="text-slate-600 dark:text-slate-400">Loading proposals...</p>;
+    return <p className="text-slate-200 dark:text-slate-400">Loading proposals...</p>;
   }
 
   if (error) {

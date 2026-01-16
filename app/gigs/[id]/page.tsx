@@ -110,95 +110,47 @@ export default function GigPage({ params }: { params: Promise<{ id: string }> })
 
   return (
     <div className="max-w-6xl mt-10 mx-auto space-y-4 sm:space-y-6 lg:space-y-8 px-2 sm:px-0">
-        {/* <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
-          <CardHeader className="p-4 sm:p-6">
-            <CardTitle className="text-lg sm:text-xl text-slate-200 dark:text-slate-100 break-words">{gig.title}</CardTitle>
-            <p className="text-sm sm:text-base text-slate-200 dark:text-slate-400 break-words">By {gig.client.name} ({gig.client.companyName})</p>
-          </CardHeader>
-          <CardContent className="p-4 sm:p-6 pt-0">
-            <p className="text-sm sm:text-base text-slate-200 dark:text-slate-300 mb-4 break-words">{gig.description}</p>
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 mb-4">
-              <span className="text-base sm:text-lg text-green-400 dark:text-green-400 font-semibold">₹{gig.budget}</span>
-              {gig.deadline && (
-                <span className="text-xs sm:text-sm text-slate-200 dark:text-slate-400">
-                  Deadline: {new Date(gig.deadline).toLocaleDateString()}
-                </span>
-              )}
-              <span className="text-xs sm:text-sm text-slate-200 dark:text-slate-400">Status: {gig.status}</span>
-            </div>
-          </CardContent>
-        </Card> */}
-{/* 
-<Card className="bg-white/5 backdrop-blur-xl border border-white/10">
-  <CardHeader className="p-2 sm:p-3">
-    <CardTitle className="text-base sm:text-lg text-slate-200 dark:text-slate-100 truncate">
-      {gig.title}
-    </CardTitle>
-    <p className="text-xs sm:text-sm text-slate-200 dark:text-slate-400 truncate">
-      By {gig.client.name} {gig.client.companyName && `(${gig.client.companyName})`}
-    </p>
-  </CardHeader>
+      <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
+        <CardHeader className="p-2 sm:p-3 pb-0 space-y-0">
+          <CardTitle className="text-base sm:text-lg text-slate-200 dark:text-slate-100 truncate leading-tight">
+            {gig.title}
+          </CardTitle>
 
-  <CardContent className="p-2 sm:p-3 pt-1">
-    <p className="text-sm text-slate-200 dark:text-slate-300 truncate mb-2">
-      {gig.description}
-    </p>
+          <p className="text-xs sm:text-sm text-slate-200 dark:text-slate-400 truncate m-0 leading-tight">
+            By {gig.client.name}{" "}
+            {gig.client.companyName && `(${gig.client.companyName})`}
+          </p>
+        </CardHeader>
 
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 text-xs sm:text-sm">
-      <span className="text-green-400 dark:text-green-400 font-semibold">
-        ₹{gig.budget}
-      </span>
-      {gig.deadline && (
-        <span className="text-slate-200 dark:text-slate-400">
-          Deadline: {new Date(gig.deadline).toLocaleDateString()}
-        </span>
+        <CardContent className="p-2 sm:p-3 pt-0">
+          <p className="text-sm text-slate-200 dark:text-slate-300 truncate mb-2 mt-[-2px] leading-tight">
+            {gig.description}
+          </p>
+
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 text-xs sm:text-sm">
+            <span className="text-green-400 font-semibold">₹{gig.budget}</span>
+
+            {gig.deadline && (
+              <span className="text-slate-200 dark:text-slate-400">
+                Deadline: {new Date(gig.deadline).toLocaleDateString()}
+              </span>
+            )}
+
+            <span className="text-slate-200 dark:text-slate-400">
+              Status: {gig.status}
+            </span>
+          </div>
+        </CardContent>
+      </Card>
+
+      {contract ? (
+        <ContractDetails contract={contract} isClient={isClient} />
+      ) : isClient ? (
+        <ProposalsList gigId={gig._id} />
+      ) : (
+        <ProposalForm gigId={gig._id} />
       )}
-      <span className="text-slate-200 dark:text-slate-400">Status: {gig.status}</span>
     </div>
-  </CardContent>
-</Card> */}
-
-<Card className="bg-white/5 backdrop-blur-xl border border-white/10">
-  <CardHeader className="p-2 sm:p-3 pb-0 space-y-0">
-    <CardTitle className="text-base sm:text-lg text-slate-200 dark:text-slate-100 truncate leading-tight">
-      {gig.title}
-    </CardTitle>
-
-    <p className="text-xs sm:text-sm text-slate-200 dark:text-slate-400 truncate m-0 leading-tight">
-      By {gig.client.name}{" "}
-      {gig.client.companyName && `(${gig.client.companyName})`}
-    </p>
-  </CardHeader>
-
-  <CardContent className="p-2 sm:p-3 pt-0">
-    <p className="text-sm text-slate-200 dark:text-slate-300 truncate mb-2 mt-[-2px] leading-tight">
-      {gig.description}
-    </p>
-
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 text-xs sm:text-sm">
-      <span className="text-green-400 font-semibold">₹{gig.budget}</span>
-
-      {gig.deadline && (
-        <span className="text-slate-200 dark:text-slate-400">
-          Deadline: {new Date(gig.deadline).toLocaleDateString()}
-        </span>
-      )}
-
-      <span className="text-slate-200 dark:text-slate-400">
-        Status: {gig.status}
-      </span>
-    </div>
-  </CardContent>
-</Card>
-
-        {contract ? (
-          <ContractDetails contract={contract} isClient={isClient} />
-        ) : isClient ? (
-          <ProposalsList gigId={gig._id} />
-        ) : (
-          <ProposalForm gigId={gig._id} />
-        )}
-      </div>
   );
 }
 
@@ -262,7 +214,7 @@ function ContractDetails({ contract, isClient }: { contract: Contract; isClient:
         <div className="space-y-3 sm:space-y-4">
           <div>
             <h3 className="text-base sm:text-lg font-medium text-slate-200 dark:text-slate-100">Freelancer</h3>
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 break-words">{contract.freelancer.name} ({contract.freelancer.email})</p>
+            <p className="text-sm sm:text-base text-slate-200 dark:text-slate-400 break-words">{contract.freelancer.name} ({contract.freelancer.email})</p>
           </div>
           <div>
             <h3 className="text-base sm:text-lg font-medium text-slate-200 dark:text-slate-100">Agreed Amount</h3>
@@ -270,7 +222,7 @@ function ContractDetails({ contract, isClient }: { contract: Contract; isClient:
           </div>
           <div>
             <h3 className="text-base sm:text-lg font-medium text-slate-200 dark:text-slate-100">Status</h3>
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">{contract.status}</p>
+            <p className="text-sm sm:text-base text-slate-200 dark:text-slate-400">{contract.status}</p>
           </div>
           {contract.submission && (
             <div>
@@ -311,11 +263,10 @@ function ContractDetails({ contract, isClient }: { contract: Contract; isClient:
                   <button
                     key={star}
                     type="button"
-                    className={`text-xl sm:text-2xl ${
-                      star <= (hoverRating || rating)
+                    className={`text-xl sm:text-2xl ${star <= (hoverRating || rating)
                         ? "text-yellow-400"
                         : "text-gray-300"
-                    } hover:text-yellow-400 transition-colors`}
+                      } hover:text-yellow-400 transition-colors`}
                     onClick={() => setRating(star)}
                     onMouseEnter={() => setHoverRating(star)}
                     onMouseLeave={() => setHoverRating(0)}
@@ -324,7 +275,7 @@ function ContractDetails({ contract, isClient }: { contract: Contract; isClient:
                   </button>
                 ))}
               </div>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
+              <p className="text-sm text-slate-200 dark:text-slate-400">
                 {rating} star{rating !== 1 ? "s" : ""}
               </p>
               <Button onClick={handleApproveWork} disabled={submitting} className="w-full sm:w-auto text-sm sm:text-base">

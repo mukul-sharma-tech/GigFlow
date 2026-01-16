@@ -65,142 +65,88 @@ export default function ProposalForm({ gigId }: ProposalFormProps) {
       setSubmitting(false);
     }
   };
-
-  // return (
-  //   <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
-  //     <CardHeader>
-  //       <CardTitle className="text-slate-400 dark:text-slate-100">Send Proposal</CardTitle>
-  //     </CardHeader>
-  //     <CardContent>
-  //       <form onSubmit={handleSubmit} className="space-y-4">
-  //         <div>
-  //           <Label htmlFor="coverLetter" className="text-slate-200 dark:text-slate-100">Cover Letter</Label>
-  //           <Textarea
-  //             id="coverLetter"
-  //             value={coverLetter}
-  //             onChange={(e) => setCoverLetter(e.target.value)}
-  //             required
-  //             placeholder="Introduce yourself and explain why you're the best fit..."
-  //             className="bg-slate-800 border-slate-600 text-slate-100"
-  //             rows={6}
-  //           />
-  //         </div>
-  //         <div className="grid grid-cols-2 gap-4">
-  //           <div>
-  //             <Label htmlFor="proposedAmount" className="text-slate-200 dark:text-slate-100">Proposed Amount ($)</Label>
-  //             <Input
-  //               id="proposedAmount"
-  //               type="number"
-  //               value={proposedAmount}
-  //               onChange={(e) => setProposedAmount(e.target.value)}
-  //               required
-  //               min="1"
-  //               step="0.01"
-  //               className="bg-slate-800 border-slate-600 text-slate-100"
-  //             />
-  //           </div>
-  //           <div>
-  //             <Label htmlFor="deliveryTime" className="text-slate-200 dark:text-slate-100">Delivery Time (days)</Label>
-  //             <Input
-  //               id="deliveryTime"
-  //               type="number"
-  //               value={deliveryTime}
-  //               onChange={(e) => setDeliveryTime(e.target.value)}
-  //               required
-  //               min="1"
-  //               className="bg-slate-800 border-slate-600 text-slate-100"
-  //             />
-  //           </div>
-  //         </div>
-  //         <Button type="submit" disabled={submitting} className="w-full">
-  //           {submitting ? "Submitting..." : "Submit Proposal"}
-  //         </Button>
-  //       </form>
-  //     </CardContent>
-  //   </Card>
-  // );
   return (
-  <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
-    <CardHeader>
-      <CardTitle className="text-slate-400 dark:text-slate-100">
-        Send Proposal
-      </CardTitle>
-    </CardHeader>
+    <Card className="bg-white/5 backdrop-blur-xl border border-white/10">
+      <CardHeader>
+        <CardTitle className="text-slate-400 dark:text-slate-100">
+          Send Proposal
+        </CardTitle>
+      </CardHeader>
 
-    <CardContent>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        
-        {/* Cover Letter */}
-        <div className="flex flex-col gap-2">
-          <Label
-            htmlFor="coverLetter"
-            className="text-slate-200 dark:text-slate-100"
-          >
-            Cover Letter
-          </Label>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
 
-          <Textarea
-            id="coverLetter"
-            value={coverLetter}
-            onChange={(e) => setCoverLetter(e.target.value)}
-            required
-            placeholder="Introduce yourself and explain why you're the best fit..."
-            className="bg-slate-800 border-slate-600 text-slate-100"
-            rows={6}
-          />
-        </div>
-
-        {/* Amount + Delivery */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          
+          {/* Cover Letter */}
           <div className="flex flex-col gap-2">
             <Label
-              htmlFor="proposedAmount"
+              htmlFor="coverLetter"
               className="text-slate-200 dark:text-slate-100"
             >
-              Proposed Amount (₹)
+              Cover Letter
             </Label>
 
-            <Input
-              id="proposedAmount"
-              type="number"
-              value={proposedAmount}
-              onChange={(e) => setProposedAmount(e.target.value)}
+            <Textarea
+              id="coverLetter"
+              value={coverLetter}
+              onChange={(e) => setCoverLetter(e.target.value)}
               required
-              min="1"
-              step="0.01"
+              placeholder="Introduce yourself and explain why you're the best fit..."
               className="bg-slate-800 border-slate-600 text-slate-100"
+              rows={6}
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <Label
-              htmlFor="deliveryTime"
-              className="text-slate-200 dark:text-slate-100"
-            >
-              Delivery Time (days)
-            </Label>
+          {/* Amount + Delivery */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-            <Input
-              id="deliveryTime"
-              type="number"
-              value={deliveryTime}
-              onChange={(e) => setDeliveryTime(e.target.value)}
-              required
-              min="1"
-              className="bg-slate-800 border-slate-600 text-slate-100"
-            />
+            <div className="flex flex-col gap-2">
+              <Label
+                htmlFor="proposedAmount"
+                className="text-slate-200 dark:text-slate-100"
+              >
+                Proposed Amount (₹)
+              </Label>
+
+              <Input
+                id="proposedAmount"
+                type="number"
+                value={proposedAmount}
+                onChange={(e) => setProposedAmount(e.target.value)}
+                required
+                min="1"
+                step="0.01"
+                className="bg-slate-800 border-slate-600 text-slate-100"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Label
+                htmlFor="deliveryTime"
+                className="text-slate-200 dark:text-slate-100"
+              >
+                Delivery Time (days)
+              </Label>
+
+              <Input
+                id="deliveryTime"
+                type="number"
+                value={deliveryTime}
+                onChange={(e) => setDeliveryTime(e.target.value)}
+                required
+                min="1"
+                className="bg-slate-800 border-slate-600 text-slate-100"
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Submit */}
-        <Button type="submit" disabled={submitting} className="w-full">
-          {submitting ? "Submitting..." : "Submit Proposal"}
-        </Button>
+          {/* Submit */}
+          <Button type="submit" disabled={submitting} className="w-full">
+            {submitting ? "Submitting..." : "Submit Proposal"}
+          </Button>
 
-      </form>
-    </CardContent>
-  </Card>
-);
+        </form>
+      </CardContent>
+    </Card>
+  );
 
 }
